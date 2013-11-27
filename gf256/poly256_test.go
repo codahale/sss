@@ -24,9 +24,10 @@ func TestPolyDegree(t *testing.T) {
 }
 
 func TestPolyEval(t *testing.T) {
+	expected := Element(17)
 	actual := p.Eval(2)
-	if actual != 17 {
-		t.Errorf("Expected 161 but was %v", actual)
+	if actual != expected {
+		t.Errorf("Expected %v but was %v", expected, actual)
 	}
 }
 
@@ -71,7 +72,7 @@ func TestPolyMultiplication(t *testing.T) {
 	actual := p.Mul(p2)
 
 	if !Equal(expected, actual) {
-		t.Errorf("Expected \n%v but was \n%v", expected, actual)
+		t.Errorf("Expected %v but was %v", expected, actual)
 	}
 }
 
