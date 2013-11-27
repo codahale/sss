@@ -18,6 +18,12 @@ func (e Element) Add(a Element) Element {
 	return Element(e ^ a)
 }
 
+// Sub returns the difference between the receiver and the argument.
+func (e Element) Sub(a Element) Element {
+	// addition and subtraction are the same in GF(256)
+	return Element(e ^ a)
+}
+
 // Mul returns the product of the receiver and the argument.
 func (e Element) Mul(a Element) Element {
 	if e == 0 || a == 0 {

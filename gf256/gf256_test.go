@@ -12,6 +12,14 @@ func TestElementAddition(t *testing.T) {
 	}
 }
 
+func TestElementSubtraction(t *testing.T) {
+	expected := Element(112)
+	actual := Element(100).Sub(Element(20))
+	if actual != expected {
+		t.Errorf("Expected %v, but was %v", expected, actual)
+	}
+}
+
 func TestElementLog(t *testing.T) {
 	expected := Element(226)
 	actual := Element(90).Log()
