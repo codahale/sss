@@ -1,19 +1,21 @@
 package sss
 
 import (
-	"testing"
+	"fmt"
 )
 
-func TestRoundtrip(t *testing.T) {
+func Example() {
+	// split into 30 shares, of which only 2 are required to combine
 	n := 30
 	k := 2
 
-	expected := "well hello there!"
-	shares, err := Split(n, k, []byte(expected))
+	secret := "well hello there!"
+	shares, err := Split(n, k, []byte(secret))
 	if err != nil {
-		t.Error(err)
+		fmt.Println(err)
 	}
 
+	// select a random subset of the total shares
 	subset := make(map[int][]byte, k)
 	for x, y := range shares {
 		subset[x] = y
@@ -22,8 +24,6 @@ func TestRoundtrip(t *testing.T) {
 		}
 	}
 
-	actual := string(Combine(subset))
-	if actual != expected {
-		t.Errorf("Expected %v but was %v", expected, actual)
-	}
+	fmt.Println(string(Combine(subset)))
+	// Output: well hello there!
 }
