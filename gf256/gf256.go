@@ -24,7 +24,7 @@ func (e Element) Mul(a Element) Element {
 	if e == 0 || a == 0 {
 		return 0
 	}
-	return expTable[e.Log()+a.Log()+1]
+	return expTable[(int(e.Log())+int(a.Log()))%255]
 }
 
 // Div returns the receiver divided by the argument.
