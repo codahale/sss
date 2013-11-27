@@ -35,3 +35,23 @@ func TestElementDivision(t *testing.T) {
 		t.Errorf("Expected %v, but was %v", expected, actual)
 	}
 }
+
+func TestElementZeroDivision(t *testing.T) {
+	expected := Element(0)
+	actual := Element(0).Div(Element(2))
+	if actual != expected {
+		t.Errorf("Expected %v, but was %v", expected, actual)
+	}
+}
+
+func TestElementDivideByZero(t *testing.T) {
+	defer func() {
+		m := recover()
+		if m != "div by zero" {
+			t.Error(m)
+		}
+	}()
+
+	Element(2).Div(Element(0))
+	t.Error("Shouldn't have been able to divide those")
+}
