@@ -39,9 +39,27 @@ func TestPolyAddition(t *testing.T) {
 	}
 }
 
+func TestPolyElementAddition(t *testing.T) {
+	expected := Polynomial{2, 0, 2, 3}
+	actual := p.AddElement(3)
+
+	if !Equal(expected, actual) {
+		t.Errorf("Expected %v but was %v", expected, actual)
+	}
+}
+
 func TestPolySubtraction(t *testing.T) {
 	expected := Polynomial{71, 32, 4, 3}
 	actual := p.Sub(p2)
+
+	if !Equal(expected, actual) {
+		t.Errorf("Expected %v but was %v", expected, actual)
+	}
+}
+
+func TestPolyElementSubtraction(t *testing.T) {
+	expected := Polynomial{41, 0, 2, 3}
+	actual := p.SubElement(40)
 
 	if !Equal(expected, actual) {
 		t.Errorf("Expected %v but was %v", expected, actual)
@@ -54,6 +72,15 @@ func TestPolyMultiplication(t *testing.T) {
 
 	if !Equal(expected, actual) {
 		t.Errorf("Expected \n%v but was \n%v", expected, actual)
+	}
+}
+
+func TestPolyElementMultiplication(t *testing.T) {
+	expected := Polynomial{30, 0, 60, 34}
+	actual := p.MulElement(30)
+
+	if !Equal(expected, actual) {
+		t.Errorf("Expected %v but was %v", expected, actual)
 	}
 }
 

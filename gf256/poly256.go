@@ -66,6 +66,26 @@ func (p Polynomial) Add(a Polynomial) Polynomial {
 	return coeff
 }
 
+// AddElement returns the sum of the receiver and the argument.
+func (p Polynomial) AddElement(a Element) Polynomial {
+	coeff := make(Polynomial, len(p))
+	for i, v := range p {
+		coeff[i] = v
+	}
+	coeff[0] = coeff[0].Add(a)
+	return coeff
+}
+
+// SubElement returns the different between the receiver and the argument.
+func (p Polynomial) SubElement(a Element) Polynomial {
+	coeff := make(Polynomial, len(p))
+	for i, v := range p {
+		coeff[i] = v
+	}
+	coeff[0] = coeff[0].Sub(a)
+	return coeff
+}
+
 // Sub returns the difference between the receiver and the argument.
 func (p Polynomial) Sub(a Polynomial) Polynomial {
 	minDeg, maxDeg := degrees(p, a)
@@ -94,6 +114,15 @@ func (p Polynomial) Mul(a Polynomial) Polynomial {
 		for j := 0; j < len(a); j++ {
 			coeff[i+j] = coeff[i+j].Add(p[i].Mul(a[j]))
 		}
+	}
+	return coeff
+}
+
+// MulElement returns the product of the receiver and the argument.
+func (p Polynomial) MulElement(a Element) Polynomial {
+	coeff := make(Polynomial, len(p))
+	for i, v := range p {
+		coeff[i] = v.Mul(a)
 	}
 	return coeff
 }
