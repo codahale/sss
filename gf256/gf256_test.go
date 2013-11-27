@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestAddition(t *testing.T) {
+func TestElementAddition(t *testing.T) {
 	expected := Element(112)
 	actual := Element(100).Add(Element(20))
 	if actual != expected {
@@ -12,7 +12,7 @@ func TestAddition(t *testing.T) {
 	}
 }
 
-func TestLog(t *testing.T) {
+func TestElementLog(t *testing.T) {
 	expected := Element(226)
 	actual := Element(90).Log()
 	if actual != expected {
@@ -20,7 +20,7 @@ func TestLog(t *testing.T) {
 	}
 }
 
-func TestMultiplication(t *testing.T) {
+func TestElementMultiplication(t *testing.T) {
 	expected := Element(254)
 	actual := Element(90).Mul(21)
 	if actual != expected {
@@ -28,7 +28,7 @@ func TestMultiplication(t *testing.T) {
 	}
 }
 
-func TestDivision(t *testing.T) {
+func TestElementDivision(t *testing.T) {
 	expected := Element(189)
 	actual := Element(90).Div(Element(21))
 	if actual != expected {
