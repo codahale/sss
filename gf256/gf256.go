@@ -2,7 +2,6 @@ package gf256
 
 const (
 	fieldSize = 256 // 2^8
-	primitive = 285 // 1 + X^2 + X^3 + X^4 + X^8
 )
 
 var (
