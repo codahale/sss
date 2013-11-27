@@ -1,3 +1,4 @@
+// Package gf256 implements polynomials over GF(256).
 package gf256
 
 const (
