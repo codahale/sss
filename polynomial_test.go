@@ -1,12 +1,12 @@
-package gf256
+package sss
 
 import (
 	"testing"
 )
 
 var (
-	p  = Polynomial{1, 0, 2, 3}
-	p2 = Polynomial{70, 32, 6}
+	p  = polynomial{1, 0, 2, 3}
+	p2 = polynomial{70, 32, 6}
 )
 
 func TestPolyString(t *testing.T) {
@@ -18,21 +18,21 @@ func TestPolyString(t *testing.T) {
 }
 
 func TestPolyDegree(t *testing.T) {
-	if p.Degree() != 3 {
-		t.Errorf("Expected %v to be a 3rd degree polynomial but was %d", p, p.Degree())
+	if p.degree() != 3 {
+		t.Errorf("Expected %v to be a 3rd degree polynomial but was %d", p, p.degree())
 	}
 }
 
 func TestPolyEval(t *testing.T) {
-	expected := Element(17)
-	actual := p.Eval(2)
+	expected := element(17)
+	actual := p.eval(2)
 	if actual != expected {
 		t.Errorf("Expected %v but was %v", expected, actual)
 	}
 }
 
 func TestPolyEquals(t *testing.T) {
-	p3 := Polynomial{70, 32, 5}
+	p3 := polynomial{70, 32, 5}
 
 	if !equal(p, p) {
 		t.Errorf("%v should equal %v", p, p)

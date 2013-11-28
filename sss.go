@@ -4,7 +4,6 @@ package sss
 
 import (
 	"crypto/rand"
-	"github.com/codahale/sss/gf256"
 )
 
 // Split the given secret into N shares of which K are required to recover the
@@ -13,13 +12,13 @@ func Split(n, k int, secret []byte) (map[int][]byte, error) {
 	shares := make(map[int][]byte, n)
 
 	for _, b := range secret {
-		p, err := gf256.RandPoly(k-1, gf256.Element(b), rand.Reader)
+		p, err := randPoly(k-1, element(b), rand.Reader)
 		if err != nil {
 			return nil, err
 		}
 
 		for x := 1; x <= n; x++ {
-			y := p.Eval(gf256.Element(x))
+			y := p.eval(element(x))
 			shares[x] = append(shares[x], byte(y))
 		}
 	}
@@ -37,16 +36,16 @@ func Combine(shares map[int][]byte) []byte {
 		break
 	}
 
-	points := make([][2]gf256.Element, len(shares))
+	points := make([][2]element, len(shares))
 	for i := range secret {
 		p := 0
 		for k, v := range shares {
-			points[p][0] = gf256.Element(k)
-			points[p][1] = gf256.Element(v[i])
+			points[p][0] = element(k)
+			points[p][1] = element(v[i])
 			p++
 		}
 
-		s := gf256.Interpolate(points, 0)
+		s := interpolate(points, 0)
 		secret[i] = byte(s)
 	}
 

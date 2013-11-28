@@ -1,16 +1,16 @@
-package gf256
+package sss
 
 import (
 	"testing"
 )
 
 func TestInterpolation(t *testing.T) {
-	expected := Element(0)
-	actual := Interpolate(
-		[][2]Element{
-			[2]Element{1, 1},
-			[2]Element{2, 2},
-			[2]Element{3, 3},
+	expected := element(0)
+	actual := interpolate(
+		[][2]element{
+			[2]element{1, 1},
+			[2]element{2, 2},
+			[2]element{3, 3},
 		},
 		0)
 

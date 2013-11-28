@@ -1,5 +1,4 @@
-// Package gf256 implements polynomials over GF(256).
-package gf256
+package sss
 
 const (
 	fieldSize = 256 // 2^8
@@ -7,7 +6,7 @@ const (
 
 var (
 	// 0x11b prime polynomial and 0x03 as generator
-	expTable = [fieldSize]Element{
+	expTable = [fieldSize]element{
 		0x01, 0x03, 0x05, 0x0f, 0x11, 0x33, 0x55, 0xff, 0x1a, 0x2e, 0x72, 0x96,
 		0xa1, 0xf8, 0x13, 0x35, 0x5f, 0xe1, 0x38, 0x48, 0xd8, 0x73, 0x95, 0xa4,
 		0xf7, 0x02, 0x06, 0x0a, 0x1e, 0x22, 0x66, 0xaa, 0xe5, 0x34, 0x5c, 0xe4,
@@ -31,7 +30,7 @@ var (
 		0x39, 0x4b, 0xdd, 0x7c, 0x84, 0x97, 0xa2, 0xfd, 0x1c, 0x24, 0x6c, 0xb4,
 		0xc7, 0x52, 0xf6, 0x01,
 	}
-	logTable = [fieldSize]Element{
+	logTable = [fieldSize]element{
 		0x00, 0x00, 0x19, 0x01, 0x32, 0x02, 0x1a, 0xc6, 0x4b, 0xc7, 0x1b, 0x68,
 		0x33, 0xee, 0xdf, 0x03, 0x64, 0x04, 0xe0, 0x0e, 0x34, 0x8d, 0x81, 0xef,
 		0x4c, 0x71, 0x08, 0xc8, 0xf8, 0x69, 0x1c, 0xc1, 0x7d, 0xc2, 0x1d, 0xb5,
@@ -57,30 +56,30 @@ var (
 	}
 )
 
-// Element is an element in a GF(256) polynomial.
-type Element byte
+// element is an element in a GF(256) polynomial.
+type element byte
 
-// Add returns the sum of the receiver and the argument.
-func (e Element) Add(a Element) Element {
-	return Element(e ^ a)
+// add returns the sum of the receiver and the argument.
+func (e element) add(a element) element {
+	return element(e ^ a)
 }
 
-// Sub returns the difference between the receiver and the argument.
-func (e Element) Sub(a Element) Element {
+// sub returns the difference between the receiver and the argument.
+func (e element) sub(a element) element {
 	// addition and subtraction are the same in GF(256)
-	return Element(e ^ a)
+	return element(e ^ a)
 }
 
-// Mul returns the product of the receiver and the argument.
-func (e Element) Mul(a Element) Element {
+// mul returns the product of the receiver and the argument.
+func (e element) mul(a element) element {
 	if e == 0 || a == 0 {
 		return 0
 	}
-	return expTable[(int(e.Log())+int(a.Log()))%255]
+	return expTable[(int(e.log())+int(a.log()))%255]
 }
 
-// Div returns the receiver divided by the argument.
-func (e Element) Div(a Element) Element {
+// div returns the receiver divided by the argument.
+func (e element) div(a element) element {
 	if a == 0 {
 		panic("div by zero")
 	}
@@ -89,7 +88,7 @@ func (e Element) Div(a Element) Element {
 		return 0
 	}
 
-	p := (int(e.Log()) - int(a.Log())) % 255
+	p := (int(e.log()) - int(a.log())) % 255
 	if p < 0 {
 		p += 255
 	}
@@ -98,6 +97,6 @@ func (e Element) Div(a Element) Element {
 }
 
 // Log returns the power n such that x^n is equivalent to the receiver in GF(256).
-func (e Element) Log() Element {
-	return Element(logTable[e])
+func (e element) log() element {
+	return element(logTable[e])
 }

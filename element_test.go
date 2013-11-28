@@ -1,52 +1,52 @@
-package gf256
+package sss
 
 import (
 	"testing"
 )
 
 func TestElementAddition(t *testing.T) {
-	expected := Element(112)
-	actual := Element(100).Add(Element(20))
+	expected := element(112)
+	actual := element(100).add(element(20))
 	if actual != expected {
 		t.Errorf("Expected %v, but was %v", expected, actual)
 	}
 }
 
 func TestElementSubtraction(t *testing.T) {
-	expected := Element(112)
-	actual := Element(100).Sub(Element(20))
+	expected := element(112)
+	actual := element(100).sub(element(20))
 	if actual != expected {
 		t.Errorf("Expected %v, but was %v", expected, actual)
 	}
 }
 
 func TestElementLog(t *testing.T) {
-	expected := Element(226)
-	actual := Element(90).Log()
+	expected := element(226)
+	actual := element(90).log()
 	if actual != expected {
 		t.Errorf("Expected %v, but was %v", expected, actual)
 	}
 }
 
 func TestElementMultiplication(t *testing.T) {
-	expected := Element(254)
-	actual := Element(90).Mul(21)
+	expected := element(254)
+	actual := element(90).mul(21)
 	if actual != expected {
 		t.Errorf("Expected %v, but was %v", expected, actual)
 	}
 }
 
 func TestElementDivision(t *testing.T) {
-	expected := Element(189)
-	actual := Element(90).Div(Element(21))
+	expected := element(189)
+	actual := element(90).div(element(21))
 	if actual != expected {
 		t.Errorf("Expected %v, but was %v", expected, actual)
 	}
 }
 
 func TestElementZeroDivision(t *testing.T) {
-	expected := Element(0)
-	actual := Element(0).Div(Element(2))
+	expected := element(0)
+	actual := element(0).div(element(2))
 	if actual != expected {
 		t.Errorf("Expected %v, but was %v", expected, actual)
 	}
@@ -60,6 +60,6 @@ func TestElementDivideByZero(t *testing.T) {
 		}
 	}()
 
-	Element(2).Div(Element(0))
+	element(2).div(element(0))
 	t.Error("Shouldn't have been able to divide those")
 }

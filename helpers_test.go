@@ -1,6 +1,6 @@
-package gf256
+package sss
 
-func equal(a, b Polynomial) bool {
+func equal(a, b polynomial) bool {
 	if len(a) == len(b) {
 		for i, v := range a {
 			if b[i] != v {

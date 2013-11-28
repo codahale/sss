@@ -1,4 +1,4 @@
-package gf256
+package sss
 
 import (
 	"fmt"
@@ -6,19 +6,19 @@ import (
 )
 
 const (
-	zero = Element(0)
+	zero = element(0)
 )
 
-// Polynomial is a polynomial whose coefficients are elements in GF(256).
+// polynomial is a polynomial whose coefficients are elements in GF(256).
 // Element i is the coefficient for x^i.
-type Polynomial []Element
+type polynomial []element
 
-// Degree returns the number of terms in the polynomial.
-func (p Polynomial) Degree() int {
+// degree returns the number of terms in the polynomial.
+func (p polynomial) degree() int {
 	return len(p) - 1
 }
 
-func (p Polynomial) String() string {
+func (p polynomial) String() string {
 	coeffs := make([]string, 0)
 	for i := len(p) - 1; i >= 0; i-- {
 		e := p[i]
@@ -36,11 +36,11 @@ func (p Polynomial) String() string {
 	return strings.Join(coeffs, "+")
 }
 
-// Eval returns f(x) given x.
-func (p Polynomial) Eval(x Element) (result Element) {
+// eval returns f(x) given x.
+func (p polynomial) eval(x element) (result element) {
 	// Horner's scheme
 	for i := 1; i <= len(p); i++ {
-		result = result.Mul(x).Add(p[len(p)-i])
+		result = result.mul(x).add(p[len(p)-i])
 	}
 	return
 }
