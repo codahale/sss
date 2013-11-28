@@ -1,4 +1,4 @@
-// Package sss implements the Shamir Secret Sharing algorithm over GF2(256).
+// Package sss implements the Shamir Secret Sharing algorithm over GF(2^8).
 // This package has not been audited by cryptography or security professionals.
 package sss
 

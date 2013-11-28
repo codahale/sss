@@ -56,6 +56,7 @@ var (
 	}
 )
 
+// an element of GF(2^8)
 type element byte
 
 func (e element) add(a element) element {
@@ -63,7 +64,7 @@ func (e element) add(a element) element {
 }
 
 func (e element) sub(a element) element {
-	// addition and subtraction are the same in GF(256)
+	// addition and subtraction are the same in GF(2^8)
 	return element(e ^ a)
 }
 
