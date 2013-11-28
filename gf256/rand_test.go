@@ -15,7 +15,7 @@ func TestRandPoly(t *testing.T) {
 	}
 
 	if !equal(expected, actual) {
-		t.Errorf("Expected \n%v but was \n%v", expected, actual)
+		t.Errorf("Expected %v but was %v", expected, actual)
 	}
 }
 
@@ -55,6 +55,6 @@ func TestRandPolyFullSize(t *testing.T) {
 	}
 
 	if !equal(expected, actual) {
-		t.Errorf("Expected \n%v but was \n%v", expected, actual)
+		t.Errorf("Expected %v but was %v", expected, actual)
 	}
 }
