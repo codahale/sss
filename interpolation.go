@@ -1,7 +1,6 @@
 package sss
 
-// interpolate uses Lagrange interpolation to calculate the x-intercept
-// of the polynomial which best fits the given points.
+// Lagrange interpolation
 func interpolate(points [][2]element, x element) (value element) {
 	for i, a := range points {
 		weight := element(1)

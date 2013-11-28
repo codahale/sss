@@ -56,21 +56,17 @@ var (
 	}
 )
 
-// element is an element in a GF(256) polynomial.
 type element byte
 
-// add returns the sum of the receiver and the argument.
 func (e element) add(a element) element {
 	return element(e ^ a)
 }
 
-// sub returns the difference between the receiver and the argument.
 func (e element) sub(a element) element {
 	// addition and subtraction are the same in GF(256)
 	return element(e ^ a)
 }
 
-// mul returns the product of the receiver and the argument.
 func (e element) mul(a element) element {
 	if e == 0 || a == 0 {
 		return 0
@@ -78,7 +74,6 @@ func (e element) mul(a element) element {
 	return expTable[(int(e.log())+int(a.log()))%255]
 }
 
-// div returns the receiver divided by the argument.
 func (e element) div(a element) element {
 	if a == 0 {
 		panic("div by zero")
@@ -96,7 +91,6 @@ func (e element) div(a element) element {
 	return expTable[p]
 }
 
-// Log returns the power n such that x^n is equivalent to the receiver in GF(256).
 func (e element) log() element {
 	return element(logTable[e])
 }

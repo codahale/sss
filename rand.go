@@ -4,9 +4,7 @@ import (
 	"io"
 )
 
-// randPoly returns a random polynomial of the given degree with the given
-// x-intercept. This should only be used with crypto/rand.Reader outside of
-// testing.
+// generates a random n-degree polynomial w/ a given x-intercept
 func randPoly(degree int, x element, rand io.Reader) (polynomial, error) {
 	result := make(polynomial, degree+1)
 	result[0] = x

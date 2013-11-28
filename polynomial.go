@@ -9,11 +9,8 @@ const (
 	zero = element(0)
 )
 
-// polynomial is a polynomial whose coefficients are elements in GF(256).
-// Element i is the coefficient for x^i.
 type polynomial []element
 
-// degree returns the number of terms in the polynomial.
 func (p polynomial) degree() int {
 	return len(p) - 1
 }
@@ -36,7 +33,6 @@ func (p polynomial) String() string {
 	return strings.Join(coeffs, "+")
 }
 
-// eval returns f(x) given x.
 func (p polynomial) eval(x element) (result element) {
 	// Horner's scheme
 	for i := 1; i <= len(p); i++ {
