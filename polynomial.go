@@ -5,10 +5,6 @@ import (
 	"strings"
 )
 
-const (
-	zero = element(0)
-)
-
 type polynomial []element
 
 func (p polynomial) degree() int {
