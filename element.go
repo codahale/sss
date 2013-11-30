@@ -93,5 +93,5 @@ func (e element) div(a element) element {
 }
 
 func (e element) log() element {
-	return element(logTable[e])
+	return logTable[e]
 }
