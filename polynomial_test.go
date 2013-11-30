@@ -9,14 +9,6 @@ var (
 	p2 = polynomial{70, 32, 6}
 )
 
-func TestPolyString(t *testing.T) {
-	expected := "6x^2+32x+70"
-	actual := p2.String()
-	if actual != expected {
-		t.Errorf("Expected %s but was %s", expected, actual)
-	}
-}
-
 func TestPolyDegree(t *testing.T) {
 	if p.degree() != 3 {
 		t.Errorf("Expected %v to be a 3rd degree polynomial but was %d", p, p.degree())
