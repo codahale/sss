@@ -10,8 +10,10 @@ var (
 )
 
 func TestPolyDegree(t *testing.T) {
-	if p.degree() != 3 {
-		t.Errorf("Expected %v to be a 3rd degree polynomial but was %d", p, p.degree())
+	expected := 3
+	actual := p.degree()
+	if actual != expected {
+		t.Errorf("Expected %v but was %v", expected, actual)
 	}
 }
 
