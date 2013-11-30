@@ -67,12 +67,11 @@ func Combine(shares map[int][]byte) []byte {
 		break
 	}
 
-	points := make([][2]element, len(shares))
+	points := make([]pair, len(shares))
 	for i := range secret {
 		p := 0
 		for k, v := range shares {
-			points[p][0] = element(k)
-			points[p][1] = element(v[i])
+			points[p] = pair{x: element(k), y: element(v[i])}
 			p++
 		}
 

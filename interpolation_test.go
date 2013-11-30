@@ -7,10 +7,10 @@ import (
 func TestInterpolation(t *testing.T) {
 	expected := element(0)
 	actual := interpolate(
-		[][2]element{
-			[2]element{1, 1},
-			[2]element{2, 2},
-			[2]element{3, 3},
+		[]pair{
+			pair{x: 1, y: 1},
+			pair{x: 2, y: 2},
+			pair{x: 3, y: 3},
 		},
 		0)
 
