@@ -19,6 +19,7 @@ func randPoly(degree int, x element, rand io.Reader) (polynomial, error) {
 		result[i] = element(buf[i-1])
 	}
 
+	// the Nth term can't be zero, or else it's a (N-1) degree polynomial
 	for {
 		buf = make([]byte, 1)
 		_, err := io.ReadFull(rand, buf)
