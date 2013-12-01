@@ -10,12 +10,16 @@
 //
 //     f1(x) =  78x^2 +  19x + 42
 //     f2(x) = 128x^2 + 171x + 42
+//     f3(x) = 121x^2 +   3x + 42
+//     f4(x) =  91x^2 +  95x + 42
 //     etc.
 //
 // These polynomials are then evaluated for values of X > 0:
 //
-//     f1(1) = 139
-//     f2(2) = 896
+//     f1(1) =  139
+//     f2(2) =  896
+//     f3(3) = 1140
+//     f4(4) = 1783
 //     etc.
 //
 // These (x, y) pairs are the shares given to the parties. In order to combine
@@ -28,7 +32,8 @@
 // wrong, and the result of f(0) will not be the secret.
 //
 // This package constructs polynomials over the field GF(2^8) for each byte of
-// the secret, allowing for much faster splitting and combining.
+// the secret, allowing for fast splitting and combining of anything which can
+// be encoded as bytes.
 //
 // This package has not been audited by cryptography or security professionals.
 package sss
