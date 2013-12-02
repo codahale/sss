@@ -26,11 +26,11 @@ func TestPolyEval(t *testing.T) {
 	}
 }
 
-func TestRandPoly(t *testing.T) {
+func TestGeneratePoly(t *testing.T) {
 	b := []byte{1, 2, 3}
 
 	expected := polynomial{10, 1, 2, 3}
-	actual, err := randPoly(3, 10, bytes.NewReader(b))
+	actual, err := generate(3, 10, bytes.NewReader(b))
 	if err != nil {
 		t.Error(err)
 	}
@@ -40,10 +40,10 @@ func TestRandPoly(t *testing.T) {
 	}
 }
 
-func TestRandPolyEOF(t *testing.T) {
+func TestGeneratePolyEOF(t *testing.T) {
 	b := []byte{1}
 
-	p, err := randPoly(3, 10, bytes.NewReader(b))
+	p, err := generate(3, 10, bytes.NewReader(b))
 	if p != nil {
 		t.Errorf("Expected an error but got %v", p)
 	}
@@ -53,10 +53,10 @@ func TestRandPolyEOF(t *testing.T) {
 	}
 }
 
-func TestRandPolyEOFFullSize(t *testing.T) {
+func TestGeneratePolyEOFFullSize(t *testing.T) {
 	b := []byte{1, 2, 0, 0, 0, 0}
 
-	p, err := randPoly(3, 10, bytes.NewReader(b))
+	p, err := generate(3, 10, bytes.NewReader(b))
 	if p != nil {
 		t.Errorf("Expected an error but got %v", p)
 	}
@@ -66,11 +66,11 @@ func TestRandPolyEOFFullSize(t *testing.T) {
 	}
 }
 
-func TestRandPolyFullSize(t *testing.T) {
+func TestGeneratePolyFullSize(t *testing.T) {
 	b := []byte{1, 2, 0, 4}
 
 	expected := polynomial{10, 1, 2, 4}
-	actual, err := randPoly(3, 10, bytes.NewReader(b))
+	actual, err := generate(3, 10, bytes.NewReader(b))
 	if err != nil {
 		t.Error(err)
 	}

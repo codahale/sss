@@ -22,7 +22,7 @@ func (p polynomial) eval(x element) (result element) {
 }
 
 // generates a random n-degree polynomial w/ a given x-intercept
-func randPoly(degree int, x element, rand io.Reader) (polynomial, error) {
+func generate(degree int, x element, rand io.Reader) (polynomial, error) {
 	result := make(polynomial, degree+1)
 	result[0] = x
 

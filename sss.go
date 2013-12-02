@@ -48,7 +48,7 @@ func Split(n, k int, secret []byte) (map[int][]byte, error) {
 	shares := make(map[int][]byte, n)
 
 	for _, b := range secret {
-		p, err := randPoly(k-1, element(b), rand.Reader)
+		p, err := generate(k-1, element(b), rand.Reader)
 		if err != nil {
 			return nil, err
 		}
