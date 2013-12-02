@@ -4,12 +4,15 @@ import (
 	"io"
 )
 
+// a GF(2^8) polynomial
 type polynomial []element
 
+// the degree of the polynomial
 func (p polynomial) degree() int {
 	return len(p) - 1
 }
 
+// evaluate the polynomial at the given point
 func (p polynomial) eval(x element) (result element) {
 	// Horner's scheme
 	for i := 1; i <= len(p); i++ {
@@ -48,6 +51,7 @@ func randPoly(degree int, x element, rand io.Reader) (polynomial, error) {
 	}
 }
 
+// an input/output pair
 type pair struct {
 	x, y element
 }
