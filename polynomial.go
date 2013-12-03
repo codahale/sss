@@ -27,8 +27,7 @@ func generate(degree int, x element, rand io.Reader) (polynomial, error) {
 	result[0] = x
 
 	buf := make([]byte, degree-1)
-	_, err := io.ReadFull(rand, buf)
-	if err != nil {
+	if _, err := io.ReadFull(rand, buf); err != nil {
 		return nil, err
 	}
 
@@ -39,8 +38,7 @@ func generate(degree int, x element, rand io.Reader) (polynomial, error) {
 	// the Nth term can't be zero, or else it's a (N-1) degree polynomial
 	for {
 		buf = make([]byte, 1)
-		_, err := io.ReadFull(rand, buf)
-		if err != nil {
+		if _, err := io.ReadFull(rand, buf); err != nil {
 			return nil, err
 		}
 
