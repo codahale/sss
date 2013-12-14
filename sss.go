@@ -40,11 +40,27 @@ package sss
 
 import (
 	"crypto/rand"
+	"errors"
+)
+
+var (
+	// ErrInvalidCount is returned when the count parameter is invalid.
+	ErrInvalidCount = errors.New("sss: N must be > 2")
+	// ErrInvalidThreshold is returned when the threshold parameter is invalid.
+	ErrInvalidThreshold = errors.New("sss: K must be > 1")
 )
 
 // Split the given secret into N shares of which K are required to recover the
 // secret. Returns a map of share IDs (1-255) to shares.
 func Split(n, k int, secret []byte) (map[int][]byte, error) {
+	if n <= 2 {
+		return nil, ErrInvalidCount
+	}
+
+	if k <= 1 {
+		return nil, ErrInvalidThreshold
+	}
+
 	shares := make(map[int][]byte, n)
 
 	for _, b := range secret {
