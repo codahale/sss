@@ -5,25 +5,28 @@ import (
 )
 
 func Example() {
-	// split into 30 shares, of which only 2 are required to combine
-	n := 30
-	k := 2
+	secret := "well hello there!" // our secret
+	n := 30                       // create 30 shares
+	k := 2                        // require 2 of them to combine
 
-	secret := "well hello there!"
-	shares, err := Split(n, k, []byte(secret))
+	shares, err := Split(n, k, []byte(secret)) // split into 30 shares
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// select a random subset of the total shares
 	subset := make(map[int][]byte, k)
-	for x, y := range shares {
+	for x, y := range shares { // just iterate since maps are randomized
 		subset[x] = y
 		if len(subset) == k {
 			break
 		}
 	}
 
-	fmt.Println(string(Combine(subset)))
+	// combine two shares and recover the secret
+	recovered := string(Combine(subset))
+	fmt.Println(recovered)
+
 	// Output: well hello there!
 }
