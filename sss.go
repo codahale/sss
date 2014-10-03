@@ -4,9 +4,9 @@
 // N people, allowing the recovery of that secret if K of those people combine
 // their shares.
 //
-// It begins by encoding a secret as a number (e.g., 42), and generating N random
-// polynomial equations of degree K-1 which have an X-intercept equal to the
-// secret. Given K=3, the following equations might be generated:
+// It begins by encoding a secret as a number (e.g., 42), and generating N
+// random polynomial equations of degree K-1 which have an X-intercept equal to
+// the secret. Given K=3, the following equations might be generated:
 //
 //     f1(x) =  78x^2 +  19x + 42
 //     f2(x) = 128x^2 + 171x + 42
@@ -23,7 +23,7 @@
 //     etc.
 //
 // These (x, y) pairs are the shares given to the parties. In order to combine
-// shares to recover the secret, these (x, y) pairs  are used as the input points
+// shares to recover the secret, these (x, y) pairs are used as the input points
 // for Lagrange interpolation, which produces a polynomial which matches the
 // given points. This polynomial can be evaluated for f(0), producing the secret
 // value--the common x-intercept for all the generated polynomials.
@@ -45,14 +45,14 @@ import (
 
 var (
 	// ErrInvalidCount is returned when the count parameter is invalid.
-	ErrInvalidCount = errors.New("sss: N must be > 2")
+	ErrInvalidCount = errors.New("N must be > 2")
 	// ErrInvalidThreshold is returned when the threshold parameter is invalid.
-	ErrInvalidThreshold = errors.New("sss: K must be > 1")
+	ErrInvalidThreshold = errors.New("K must be > 1")
 )
 
 // Split the given secret into N shares of which K are required to recover the
 // secret. Returns a map of share IDs (1-255) to shares.
-func Split(n, k int, secret []byte) (map[int][]byte, error) {
+func Split(n, k byte, secret []byte) (map[byte][]byte, error) {
 	if n <= 2 {
 		return nil, ErrInvalidCount
 	}
@@ -61,17 +61,16 @@ func Split(n, k int, secret []byte) (map[int][]byte, error) {
 		return nil, ErrInvalidThreshold
 	}
 
-	shares := make(map[int][]byte, n)
+	shares := make(map[byte][]byte, n)
 
 	for _, b := range secret {
-		p, err := generate(k-1, element(b), rand.Reader)
+		p, err := generate(k-1, b, rand.Reader)
 		if err != nil {
 			return nil, err
 		}
 
-		for x := 1; x <= n; x++ {
-			y := p.eval(element(x))
-			shares[x] = append(shares[x], byte(y))
+		for x := byte(1); x <= n; x++ {
+			shares[x] = append(shares[x], eval(p, x))
 		}
 	}
 
@@ -79,9 +78,10 @@ func Split(n, k int, secret []byte) (map[int][]byte, error) {
 }
 
 // Combine the given shares into the original secret.
+//
 // N.B.: There is no way to know whether the returned value is, in fact, the
 // original secret.
-func Combine(shares map[int][]byte) []byte {
+func Combine(shares map[byte][]byte) []byte {
 	var secret []byte
 	for _, v := range shares {
 		secret = make([]byte, len(v))
@@ -92,12 +92,10 @@ func Combine(shares map[int][]byte) []byte {
 	for i := range secret {
 		p := 0
 		for k, v := range shares {
-			points[p] = pair{x: element(k), y: element(v[i])}
+			points[p] = pair{x: k, y: v[i]}
 			p++
 		}
-
-		s := interpolate(points, 0)
-		secret[i] = byte(s)
+		secret[i] = interpolate(points, 0)
 	}
 
 	return secret

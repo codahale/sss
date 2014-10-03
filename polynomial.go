@@ -1,29 +1,24 @@
 package sss
 
-import (
-	"io"
-)
-
-// a GF(2^8) polynomial
-type polynomial []element
+import "io"
 
 // the degree of the polynomial
-func (p polynomial) degree() int {
+func degree(p []byte) int {
 	return len(p) - 1
 }
 
 // evaluate the polynomial at the given point
-func (p polynomial) eval(x element) (result element) {
+func eval(p []byte, x byte) (result byte) {
 	// Horner's scheme
 	for i := 1; i <= len(p); i++ {
-		result = result.mul(x).add(p[len(p)-i])
+		result = mul(result, x) ^ p[len(p)-i]
 	}
 	return
 }
 
 // generates a random n-degree polynomial w/ a given x-intercept
-func generate(degree int, x element, rand io.Reader) (polynomial, error) {
-	result := make(polynomial, degree+1)
+func generate(degree byte, x byte, rand io.Reader) ([]byte, error) {
+	result := make([]byte, degree+1)
 	result[0] = x
 
 	buf := make([]byte, degree-1)
@@ -31,8 +26,8 @@ func generate(degree int, x element, rand io.Reader) (polynomial, error) {
 		return nil, err
 	}
 
-	for i := 1; i < degree; i++ {
-		result[i] = element(buf[i-1])
+	for i := byte(1); i < degree; i++ {
+		result[i] = buf[i-1]
 	}
 
 	// the Nth term can't be zero, or else it's a (N-1) degree polynomial
@@ -43,7 +38,7 @@ func generate(degree int, x element, rand io.Reader) (polynomial, error) {
 		}
 
 		if buf[0] != 0 {
-			result[degree] = element(buf[0])
+			result[degree] = buf[0]
 			return result, nil
 		}
 	}
@@ -51,22 +46,22 @@ func generate(degree int, x element, rand io.Reader) (polynomial, error) {
 
 // an input/output pair
 type pair struct {
-	x, y element
+	x, y byte
 }
 
 // Lagrange interpolation
-func interpolate(points []pair, x element) (value element) {
+func interpolate(points []pair, x byte) (value byte) {
 	for i, a := range points {
-		weight := element(1)
+		weight := byte(1)
 		for j, b := range points {
 			if i != j {
-				top := x.sub(b.x)
-				bottom := a.x.sub(b.x)
-				factor := top.div(bottom)
-				weight = weight.mul(factor)
+				top := x ^ b.x
+				bottom := a.x ^ b.x
+				factor := div(top, bottom)
+				weight = mul(weight, factor)
 			}
 		}
-		value = value.add(weight.mul(a.y))
+		value = value ^ mul(weight, a.y)
 	}
 	return
 }

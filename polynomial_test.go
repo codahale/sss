@@ -6,46 +6,42 @@ import (
 )
 
 var (
-	p  = polynomial{1, 0, 2, 3}
-	p2 = polynomial{70, 32, 6}
+	p  = []byte{1, 0, 2, 3}
+	p2 = []byte{70, 32, 6}
 )
 
-func TestPolyDegree(t *testing.T) {
-	expected := 3
-	actual := p.degree()
-	if actual != expected {
-		t.Errorf("Expected %v but was %v", expected, actual)
+func TestDegree(t *testing.T) {
+	if v, want := degree(p), 3; v != want {
+		t.Errorf("Was %v, but expected %v", v, want)
 	}
 }
 
-func TestPolyEval(t *testing.T) {
-	expected := element(17)
-	actual := p.eval(2)
-	if actual != expected {
-		t.Errorf("Expected %v but was %v", expected, actual)
+func TestEval(t *testing.T) {
+	if v, want := eval(p, 2), byte(17); v != want {
+		t.Errorf("Was %v, but expected %v", v, want)
 	}
 }
 
-func TestGeneratePoly(t *testing.T) {
+func TestGenerate(t *testing.T) {
 	b := []byte{1, 2, 3}
 
-	expected := polynomial{10, 1, 2, 3}
+	expected := []byte{10, 1, 2, 3}
 	actual, err := generate(3, 10, bytes.NewReader(b))
 	if err != nil {
 		t.Error(err)
 	}
 
-	if !equal(expected, actual) {
-		t.Errorf("Expected %v but was %v", expected, actual)
+	if !bytes.Equal(actual, expected) {
+		t.Errorf("Was %v, but expected %v", actual, expected)
 	}
 }
 
-func TestGeneratePolyEOF(t *testing.T) {
+func TestGenerateEOF(t *testing.T) {
 	b := []byte{1}
 
 	p, err := generate(3, 10, bytes.NewReader(b))
 	if p != nil {
-		t.Errorf("Expected an error but got %v", p)
+		t.Errorf("Was %v, but expected an error", p)
 	}
 
 	if err == nil {
@@ -58,7 +54,7 @@ func TestGeneratePolyEOFFullSize(t *testing.T) {
 
 	p, err := generate(3, 10, bytes.NewReader(b))
 	if p != nil {
-		t.Errorf("Expected an error but got %v", p)
+		t.Errorf("Was %v, but xpected an error", p)
 	}
 
 	if err == nil {
@@ -66,31 +62,28 @@ func TestGeneratePolyEOFFullSize(t *testing.T) {
 	}
 }
 
-func TestGeneratePolyFullSize(t *testing.T) {
+func TestGenerateFullSize(t *testing.T) {
 	b := []byte{1, 2, 0, 4}
 
-	expected := polynomial{10, 1, 2, 4}
+	expected := []byte{10, 1, 2, 4}
 	actual, err := generate(3, 10, bytes.NewReader(b))
 	if err != nil {
 		t.Error(err)
 	}
 
-	if !equal(expected, actual) {
-		t.Errorf("Expected %v but was %v", expected, actual)
+	if !bytes.Equal(actual, expected) {
+		t.Errorf("Was %v but expected %v", actual, expected)
 	}
 }
 
-func TestInterpolation(t *testing.T) {
-	expected := element(0)
-	actual := interpolate(
-		[]pair{
-			pair{x: 1, y: 1},
-			pair{x: 2, y: 2},
-			pair{x: 3, y: 3},
-		},
-		0)
+func TestInterpolate(t *testing.T) {
+	in := []pair{
+		pair{x: 1, y: 1},
+		pair{x: 2, y: 2},
+		pair{x: 3, y: 3},
+	}
 
-	if expected != actual {
-		t.Errorf("Expected %v, but was %v", expected, actual)
+	if v, want := interpolate(in, 0), byte(0); v != want {
+		t.Errorf("Was %v, but expected %v", v, want)
 	}
 }
