@@ -45,7 +45,7 @@ import (
 
 var (
 	// ErrInvalidCount is returned when the count parameter is invalid.
-	ErrInvalidCount = errors.New("N must be > 2")
+	ErrInvalidCount = errors.New("N must be >= K")
 	// ErrInvalidThreshold is returned when the threshold parameter is invalid.
 	ErrInvalidThreshold = errors.New("K must be > 1")
 )
@@ -53,12 +53,12 @@ var (
 // Split the given secret into N shares of which K are required to recover the
 // secret. Returns a map of share IDs (1-255) to shares.
 func Split(n, k byte, secret []byte) (map[byte][]byte, error) {
-	if n <= 2 {
-		return nil, ErrInvalidCount
-	}
-
 	if k <= 1 {
 		return nil, ErrInvalidThreshold
+	}
+
+	if n < k {
+		return nil, ErrInvalidCount
 	}
 
 	shares := make(map[byte][]byte, n)
